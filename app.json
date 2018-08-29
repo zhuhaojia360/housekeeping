@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/booking/booking",
+    "pages/order/order",
+    "pages/recommend/recommend",
+    "pages/user/user",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/technicianDetail/technicianDetail",
+    "pages/aboutUs/aboutUs",
+    "pages/useHelp/useHelp",
+    "pages/feedback/feedback"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fe4c40",
+    "navigationBarTitleText": "蜂鸟服务",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "selectedColor": "#fe4c40",
+    "color": "#ccc",
+    "backgroundColor": "#f6f6f7",
+    "borderStyle": "white",
+    "list": [
+      {
+        "text": "预约服务",
+        "pagePath": "pages/booking/booking",
+        "iconPath": "images/booking.png",
+        "selectedIconPath": "images/booking_active.png"
+      },
+      {
+        "text": "快速抢单",
+        "pagePath": "pages/order/order",
+        "iconPath": "images/order.png",
+        "selectedIconPath": "images/order_active.png"
+      },
+      {
+        "text": "智能推荐",
+        "iconPath": "images/recommend.png",
+        "selectedIconPath": "images/recommend-click.png",
+        "pagePath": "pages/recommend/recommend"
+      },
+      {
+        "text": "个人中心",
+        "pagePath": "pages/user/user",
+        "iconPath": "images/user.png",
+        "selectedIconPath": "images/user_active.png"
+      }
+    ]
+  }
+}

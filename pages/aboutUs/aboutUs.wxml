@@ -1,0 +1,24 @@
+<!--pages/aboutUs/aboutUs.wxml-->
+<view class="page">
+
+  <view class="head"></view>
+  <view class="head2"></view>
+
+  <image class="logo" src="../../images/logo.png"></image>
+
+  <view class="wave1">
+    <image style="width:1500rpx;height:400rpx;transform:rotate({{lean}}deg);" src="../../images/first.png"></image>
+  </view>
+
+  <view class="wave2">
+    <image style="width:1500rpx;height:400rpx;transform:rotate({{lean}}deg) ;" src="../../images/second.png"></image>
+  </view>
+
+  <view class="name">左邻右舍</view>
+  <view class="what">致力于打造去中介化、信息透明的家政服务平台</view>
+
+  <view class="contact">联系方式：18670015598</view>
+  <view class="supportUs">
+    <image src="../../images/supportUs.png">支持我们</image>
+  </view>
+</view>
