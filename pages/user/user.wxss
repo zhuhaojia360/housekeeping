@@ -1,6 +1,4 @@
 /* pages/user/user.wxss */
-
-
 page{
      height: 100%;
  }
@@ -32,7 +30,7 @@ page{
   color: #fff;
 }
 
-.collect,.message,.release,.useHelp,.aboutUs{
+.collect,.message,.release,.useHelp,.aboutUs,.register{
   display: flex;
   height: 80rpx;
   width: 100%;

@@ -1,7 +1,5 @@
 // useHelp.js
 Page({
-
-
   data: {
     showHowGetTeacher: false,
     showHowGetStudent: false,
@@ -10,7 +8,6 @@ Page({
     showSecurity: false
 
   },
-
 
   onLoad: function (options) {
 
@@ -82,7 +79,6 @@ Page({
       });
     }
   },
-
 
   showAboutSalary: function () {
     if (this.data.showAboutSalary == false) {

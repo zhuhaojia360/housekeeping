@@ -9,12 +9,14 @@
     "pages/technicianDetail/technicianDetail",
     "pages/aboutUs/aboutUs",
     "pages/useHelp/useHelp",
-    "pages/feedback/feedback"
+    "pages/feedback/feedback",
+    "pages/customerRegister/customerRegister",
+    "pages/technicianRegister/technicianRegister"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fe4c40",
-    "navigationBarTitleText": "蜂鸟服务",
+    "navigationBarTitleText": "左邻右舍",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {

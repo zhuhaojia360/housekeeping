@@ -6,7 +6,7 @@ Page({
     newApply: '',
   },
 
-  onShow: function () {
+  onShow: function() {
     var objectId, that = this;
     var currentUser = Bmob.User.current();
     objectId = currentUser.id;
@@ -17,19 +17,18 @@ Page({
     queryApply.equalTo("getApplyUser", objectId);
     queryApply.equalTo("open", false);
     queryApply.count({
-      success: function (count) {
+      success: function(count) {
         that.setData({
           newApply: count
         })
       },
-      error: function (error) {
-      }
+      error: function(error) {}
     });
   },
 
-  onLoad: function () {
+  onLoad: function() {
     var that = this
-    app.getUserInfo(function (userInfo) {
+    app.getUserInfo(function(userInfo) {
       console.log(userInfo)
       //更新数据
       that.setData({
@@ -38,14 +37,40 @@ Page({
     })
   },
 
-  collect: function () {
+  register: function() {
+    var register = false;
+    var role = 'customer';
+    if (register == false) {
+      if (role == "customer"){
+      wx.navigateTo({
+        url: '../customerRegister/customerRegister'
+      })
+      }else if(role =='technician'){
+        wx.navigateTo({
+          url: '../technicianRegister/technicianRegister'
+        })
+      }
+    } else if (register == true) {
+      if (role == "customer") {
+        wx.navigateTo({
+          url: '../releaseCustomer/releaseCustomer'
+        })
+      } else if (role == "technician") {
+        wx.navigateTo({
+          url: '../releaseTechnician/releaseTechnician'
+        })
+      }
+    }
+  },
+
+  collect: function() {
     var currentUser = Bmob.User.current();
     var currentUserId = currentUser.id;
     var User = Bmob.Object.extend("_User");
     var user = new User();
     var query = new Bmob.Query(User);
     query.get(currentUserId, {
-      success: function (result) {
+      success: function(result) {
         var register = result.get("register");
         var role = result.get("role");
         if (register == false) {
@@ -55,44 +80,38 @@ Page({
             confirmText: '立即注册',
             confirmColor: '#fe4c40',
             cancelColor: '#bdbdbd',
-            success: function (res) {
+            success: function(res) {
               if (res.confirm) {
                 wx.navigateTo({
                   url: '../teacher-register/teacher-register'
                 })
-              } else if (res.cancel) {
-              }
+              } else if (res.cancel) {}
             }
           })
-        }
-        else if (register == true) {
+        } else if (register == true) {
           if (role == "teacher") {
             wx.navigateTo({
               url: '../collectStudent/collectStudent'
             })
-          }
-          else if (role == "student") {
+          } else if (role == "student") {
             wx.navigateTo({
               url: '../collectTeacher/collectTeacher'
             })
           }
         }
       },
-      error: function (error) {
-      }
+      error: function(error) {}
     });
   },
 
-
-
-  apply: function () {
+  apply: function() {
     var currentUser = Bmob.User.current();
     var currentUserId = currentUser.id;
     var User = Bmob.Object.extend("_User");
     var user = new User();
     var query = new Bmob.Query(User);
     query.get(currentUserId, {
-      success: function (result) {
+      success: function(result) {
         var register = result.get("register");
         var role = result.get("role");
         if (register == false) {
@@ -102,42 +121,38 @@ Page({
             confirmText: '立即注册',
             confirmColor: '#fe4c40',
             cancelColor: '#bdbdbd',
-            success: function (res) {
+            success: function(res) {
               if (res.confirm) {
                 wx.navigateTo({
                   url: '../teacher-register/teacher-register'
                 })
-              } else if (res.cancel) {
-              }
+              } else if (res.cancel) {}
             }
           })
-        }
-        else if (register == true) {
+        } else if (register == true) {
           if (role == "teacher") {
             wx.navigateTo({
               url: '../applyStudent/applyStudent'
             })
-          }
-          else if (role == "student") {
+          } else if (role == "student") {
             wx.navigateTo({
               url: '../applyTeacher/applyTeacher'
             })
           }
         }
       },
-      error: function (error) {
-      }
+      error: function(error) {}
     });
   },
 
-  release: function () {
+  release: function() {
     var currentUser = Bmob.User.current();
     var currentUserId = currentUser.id;
     var User = Bmob.Object.extend("_User");
     var user = new User();
     var query = new Bmob.Query(User);
     query.get(currentUserId, {
-      success: function (result) {
+      success: function(result) {
         var register = result.get("register");
         var role = result.get("role");
         if (register == false) {
@@ -147,41 +162,37 @@ Page({
             confirmText: '立即注册',
             confirmColor: '#fe4c40',
             cancelColor: '#bdbdbd',
-            success: function (res) {
+            success: function(res) {
               if (res.confirm) {
                 wx.navigateTo({
                   url: '../teacher-register/teacher-register'
                 })
-              } else if (res.cancel) {
-              }
+              } else if (res.cancel) {}
             }
           })
-        }
-        else if (register == true) {
+        } else if (register == true) {
           if (role == "teacher") {
             wx.navigateTo({
               url: '../releaseTeacher/releaseTeacher'
             })
-          }
-          else if (role == "student") {
+          } else if (role == "student") {
             wx.navigateTo({
               url: '../releaseStudent/releaseStudent'
             })
           }
         }
       },
-      error: function (error) {
-      }
+      error: function(error) {}
     });
   },
 
-  useHelp: function () {
+  useHelp: function() {
     wx.navigateTo({
       url: '../useHelp/useHelp'
     })
   },
 
-  aboutUs: function () {
+  aboutUs: function() {
     wx.navigateTo({
       url: '../aboutUs/aboutUs'
     })
@@ -189,5 +200,3 @@ Page({
 
 
 })
-
-
