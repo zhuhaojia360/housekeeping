@@ -6,6 +6,13 @@ Page({
     newApply: '',
   },
 
+  /**
+   * 获取用户信息
+   */
+  bingGetUserInfo: function (e) {
+    console.log(e.detail);
+  },
+
   onShow: function() {
     var objectId, that = this;
     var currentUser = Bmob.User.current();
@@ -28,13 +35,10 @@ Page({
 
   onLoad: function() {
     var that = this
-    app.getUserInfo(function(userInfo) {
-      console.log(userInfo)
       //更新数据
       that.setData({
         userInfo: userInfo
       })
-    })
   },
 
   register: function() {

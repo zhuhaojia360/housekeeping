@@ -1,6 +1,7 @@
 <!--pages/user/user.wxml-->
 <view class="page">
 
+      <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bingGetUserInfo">获取用户信息</button>
       <view class="head">
           <image class="photo" src="{{userInfo.avatarUrl}}"></image>
           <view class="name">{{userInfo.nickName}}</view>

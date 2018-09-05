@@ -1,13 +1,13 @@
 //var Bmob = require('../../utils/bmob.js');
-//var utils = require('../../utils/util.js');
+var utils = require('../../utils/util.js');
 var that;
-
+var app = getApp();
 
 Page({
   data: {
     inputText: '',
 
-    sexArray: ['男老师', '女老师'],
+    sexArray: ['女士', '先生'],
     sexIndex: 0,
     sex: '请选择您的性别',
 
@@ -17,88 +17,129 @@ Page({
 
     trait: '',
 
+    //district: '请选择您的区域',
+    //address: '请输入您的地址',
+
     degreeArray: ['本科', '研究生'],
     degreeIndex: 0,
     degree: '请选择您的学历',
 
-    courseList:
-      [{ name: "数学", chose: "false" }, { name: "英语", chose: "false" }, { name: "语文", chose: "false" }, { name: "物理", chose: "false" }, { name: "化学", chose: "false" }, { name: "生物", chose: "false" }, { name: "历史", chose: "false" }, { name: "地理", chose: "false" }, { name: "美术", chose: "false" }, { name: "钢琴", chose: "false" }, { name: "日语", chose: "false" }, { name: "韩语", chose: "false" }],
+    courseList: [{
+      name: "数学",
+      chose: "false"
+    }, {
+      name: "英语",
+      chose: "false"
+    }, {
+      name: "语文",
+      chose: "false"
+    }, {
+      name: "物理",
+      chose: "false"
+    }, {
+      name: "化学",
+      chose: "false"
+    }, {
+      name: "生物",
+      chose: "false"
+    }, {
+      name: "历史",
+      chose: "false"
+    }, {
+      name: "地理",
+      chose: "false"
+    }, {
+      name: "美术",
+      chose: "false"
+    }, {
+      name: "钢琴",
+      chose: "false"
+    }, {
+      name: "日语",
+      chose: "false"
+    }, {
+      name: "韩语",
+      chose: "false"
+    }],
     // ["数学", "英语", "语文", "物理", "化学", "生物", "历史", "地理", "美术", "钢琴", "日语", "韩语"],
     // id: null,
     choseCourse: [],
 
-    traitList:
-      [{ name: "教学经验丰富", chose: "false" }, { name: "有成功案例", chose: "false" }, { name: "提分快", chose: "false" }, { name: "注重基础", chose: "false" }, { name: "严厉", chose: "false" }, { name: "有耐心", chose: "false" }, { name: "和学生交朋友", chose: "false" }, { name: "心理辅导", chose: "false" }, { name: "幽默风趣", chose: "false" }, { name: "沟通能力强", chose: "false" }, { name: "备课详细", chose: "false" }, { name: "引导学生自主学习", chose: "false" }, { name: "善于鼓励", chose: "false" }],
+    traitList: [{
+      name: "教学经验丰富",
+      chose: "false"
+    }, {
+      name: "有成功案例",
+      chose: "false"
+    }, {
+      name: "提分快",
+      chose: "false"
+    }, {
+      name: "注重基础",
+      chose: "false"
+    }, {
+      name: "严厉",
+      chose: "false"
+    }, {
+      name: "有耐心",
+      chose: "false"
+    }, {
+      name: "和学生交朋友",
+      chose: "false"
+    }, {
+      name: "心理辅导",
+      chose: "false"
+    }, {
+      name: "幽默风趣",
+      chose: "false"
+    }, {
+      name: "沟通能力强",
+      chose: "false"
+    }, {
+      name: "备课详细",
+      chose: "false"
+    }, {
+      name: "引导学生自主学习",
+      chose: "false"
+    }, {
+      name: "善于鼓励",
+      chose: "false"
+    }],
     choseTrait: [],
 
     photo: "../../images/photo111.png",
     loading: true,
-
 
     image_width: getApp().screenWidth / 4 - 10,
     loading: false,
     images: [],
     urlArr: [],
 
+    remark:'',
+
     inputName: null,
-    inputTelephone: null,
     inputSex: null,
+    inputTelephone: null,
+    inputTech1: null,
+    inputTech2: null,
+    inputDistrict: null,
+    inputAddress: null,
     inputUniversity: null,
     inputDegree: null,
     inputMajor: null,
     inputScore: null,
     inputSalary: null,
-
-
   },
 
-
-  uploadPhoto: function () {
-    var that = this;
-    wx.chooseImage({
-      count: 1, // 默认9
-      sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
-      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-      success: function (res) {
-        wx.showNavigationBarLoading()
-        that.setData({
-          loading: false
-        })
-        var Photo = that.data.photo;
-        var tempFilePaths = res.tempFilePaths;
-        console.log(tempFilePaths)
-        var newDate = new Date();
-        var newDateStr = newDate.toLocaleDateString();
-        var extension = /\.([^.]*)$/.exec(tempFilePaths);
-        if (extension) {
-          extension = extension[1].toLowerCase();
-        }
-        var name = newDateStr + "." + extension;//上传的图片的别名      
-        var file = new Bmob.File(name, tempFilePaths);
-        file.save().then(function (res) {
-          wx.hideNavigationBarLoading()
-          var url = res.url();
-          console.log(url);
-          showPic(url, that)
-        },
-          function (error) {
-            console.log(error)
-          });
-      }
-    })
-  },
-
-
-  onLoad: function () {
+  onLoad: function() {
     that = this;
     wx.showModal({
       title: '您的电话不会公开显示',
-      content: '为保护您的隐私，仅当您主动向家长发送申请时，对方才可看到您的电话',
+      content: '为保护您的隐私，仅当您主动向客户发送申请时，对方才可看到您的电话',
       showCancel: false,
       confirmText: '我知道啦',
-      success: function (res) {
-        if (res.confirm) {
-        }
+      success: function(res) {
+        if (res.confirm) {}
       }
     })
     var abc = new Array();
@@ -109,7 +150,155 @@ Page({
     console.log(abc[1].name)
   },
 
-  teacherInput: function (e) {
+  uploadPhoto: function() {
+    var that = this;
+    wx.chooseImage({
+      count: 1, // 默认9
+      sizeType: ['compressed', 'original'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function(res) {
+        wx.showNavigationBarLoading()
+        that.setData({
+          loading: false
+        })
+        var photo = that.data.photo;
+        //var images = that.data.images;
+        var tempFilePaths = res.tempFilePaths; //上传的图片的路径
+        //var imgsrc = tempFilePaths;
+        console.log(tempFilePaths)
+        
+        var newDate = new Date();
+        var newDateStr = newDate.toLocaleDateString();
+        var extension = /\.([^.]*)$/.exec(tempFilePaths);
+        if (extension) {
+          extension = extension[1].toLowerCase();
+        }
+        var name = newDateStr + "." + extension; //上传的图片的别名
+        //var name = newDateStr + extension; //上传的图片的别名
+
+        //必须通过setData才能生效
+        that.setData({
+          //images: res.tempFilePaths,
+          photo: res.tempFilePaths
+        })
+        console.log(res)
+        wx.uploadFile({
+          url: 'https://www.zhuhaojia360.com/technician_upload_file.php',
+          filePath: tempFilePaths[0],
+          name: 'file',
+          formData:{
+            'user':'test'
+          },
+          success: function(res){
+            wx.hideNavigationBarLoading()
+            var data = res.data
+          },
+          fail: function () {
+            //fail
+          },
+          complete: function () {
+            //complete
+          }
+        })
+
+        /*wx.saveFile({
+          tempFilePath: 'tempFilePaths[0]',
+          success: function(res){
+            wx.hideNavigationBarLoading()
+            var saveFilePath = res.savedFilePath
+          },
+          fail: function () {
+            //fail
+          },
+          complete: function () {
+            //complete
+          }
+        })*/
+      },
+      fail: function() {
+        //fail
+      },
+      complete: function() {
+        //complete
+      }
+    })
+  },
+
+  /*images = images.concat(imgsrc);
+  that.setData({
+    images: images
+  })*/
+
+  /*uploadimg: function (data) { //这里触发图片上传的方法
+          wx.hideNavigationBarLoading()
+          var images = this.data.images; //这里是你图片上传的接口
+          app.uploading({
+            url: 'https://www.zhuhaojia360.com/technician_upload_file.php',
+            path: images //这里是选取的图片的地址数组
+          });
+        }
+
+      },
+      fail: function() {
+        //fail
+      },
+      complete: function() {
+        //complete
+      }
+    })
+  },*/
+
+  uploadimg: function() {
+    var that = this;
+    /*i = data.i ? data.i : 0, //当前上传哪张照片
+      success = data.success ? data.success : 0, //上传成功的个数
+      fail = data.fail ? data.fail : 0*/ //上传失败的个数
+    wx.uploadFile({
+      url: 'https://www.zhuhaojia360.com/technician_upload_file.php',
+      filePath: that.data.images,
+      name: 'file', //根据实际情况修改
+      //formData: null, //上传图片时一起上传的数据
+      formData: {
+        'user': 'test'
+      },
+      success: function(res) {
+        wx.hideNavigationBarLoading()
+        //success++; //图片上传成功，数量+1
+        var data = res.data;
+        console.log(data);
+        //console.log(res);
+        //console.log(i);
+      },
+      fail: function() {
+        //fail++;
+        //console.log('Fail:' + i + 'Fail:' + fail);
+        console.log(error);
+      },
+      complete: function() {
+        /*console.log(i);
+        i++;
+        if (i == data.path.length) {
+          console.log('上传完毕')
+          console.log('成功：' + success + '失败：' + fail)
+        } else {
+          console.log(i);
+          data.i = i;
+          data.success = success;
+          data.fail = fail;
+          that.uploadimg(data);
+        }*/
+      }
+    })
+  },
+
+  preview_img: function() {
+    wx.previewImage({
+      urls: this.data.images, //需要预览的图片http链接列表
+      current: this.data.images //当前显示图片的http链接
+    })
+  },
+
+  teacherInput: function(e) {
     var Firts = e.detail.value.substring(0, 1);
     var inputText = Firts + "老师"
     this.setData({
@@ -120,72 +309,62 @@ Page({
       this.setData({
         inputName: false
       })
-    }
-    else {
+    } else {
       this.setData({
         inputName: true
       })
     }
   },
 
-
-
-  inputTelephoneRight: function (e) {
+  inputTelephoneRight: function(e) {
     if (!e.detail.value) {
       this.setData({
         inputTelephone: false
       })
-    }
-    else {
+    } else {
       this.setData({
         inputTelephone: true
       })
     }
   },
 
-  inputMajorRight: function (e) {
+  inputMajorRight: function(e) {
     if (!e.detail.value) {
       this.setData({
         inputMajor: false
       })
-    }
-    else {
+    } else {
       this.setData({
         inputMajor: true
       })
     }
   },
 
-  inputScoreRight: function (e) {
+  inputScoreRight: function(e) {
     if (!e.detail.value) {
       this.setData({
         inputScore: false
       })
-    }
-    else {
+    } else {
       this.setData({
         inputScore: true
       })
     }
   },
 
-  inputSalaryRight: function (e) {
+  inputSalaryRight: function(e) {
     if (!e.detail.value) {
       this.setData({
         inputSalary: false
       })
-    }
-    else {
+    } else {
       this.setData({
         inputSalary: true
       })
     }
   },
 
-
-
-
-  sexChange: function (e) {
+  sexChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       sexIndex: e.detail.value,
@@ -195,15 +374,14 @@ Page({
       this.setData({
         inputSex: false
       })
-    }
-    else {
+    } else {
       this.setData({
         inputSex: true
       })
     }
   },
 
-  universityChange: function (e) {
+  universityChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       universityIndex: e.detail.value,
@@ -213,15 +391,14 @@ Page({
       this.setData({
         inputUniversity: false
       })
-    }
-    else {
+    } else {
       this.setData({
         inputUniversity: true
       })
     }
   },
 
-  degreeChange: function (e) {
+  degreeChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       degreeIndex: e.detail.value,
@@ -231,17 +408,15 @@ Page({
       this.setData({
         inputDegree: false
       })
-    }
-    else {
+    } else {
       this.setData({
         inputDegree: true
       })
     }
   },
 
-
-  choseCourse: function (e) {
-    var index = e.currentTarget.dataset.index;  //获取自定义的ID值 
+  choseCourse: function(e) {
+    var index = e.currentTarget.dataset.index; //获取自定义的ID值 
     var choseCourse = that.data.choseCourse;
     var courseListNow = that.data.courseList;
     if (that.data.courseList[index].chose == 'false') {
@@ -251,8 +426,7 @@ Page({
           image: '../../images/warn.png',
           duration: 2000
         })
-      }
-      else {
+      } else {
         choseCourse.push(that.data.courseList[index].name);
         courseListNow[index].chose = "true";
         this.setData({
@@ -263,8 +437,7 @@ Page({
         console.log(that.data.courseList)
         console.log(that.data.choseCourse)
       }
-    }
-    else if (that.data.courseList[index].chose == 'true') {
+    } else if (that.data.courseList[index].chose == 'true') {
       courseListNow[index].chose = "false";
       for (var i = 0; i < choseCourse.length; i++) {
         if (choseCourse[i] == courseListNow[index].name) {
@@ -282,8 +455,8 @@ Page({
     }
   },
 
-  choseTrait: function (e) {
-    var index = e.currentTarget.dataset.index;  //获取自定义的ID值 
+  choseTrait: function(e) {
+    var index = e.currentTarget.dataset.index; //获取自定义的ID值 
     var choseTrait = that.data.choseTrait;
     var traitListNow = that.data.traitList;
     if (that.data.traitList[index].chose == 'false') {
@@ -293,8 +466,7 @@ Page({
           image: '../../images/warn.png',
           duration: 2000
         })
-      }
-      else {
+      } else {
         choseTrait.push(that.data.traitList[index].name);
         traitListNow[index].chose = "true";
         this.setData({
@@ -305,8 +477,7 @@ Page({
         console.log(that.data.traitList)
         console.log(that.data.choseTrait)
       }
-    }
-    else if (that.data.traitList[index].chose == 'true') {
+    } else if (that.data.traitList[index].chose == 'true') {
       traitListNow[index].chose = "false";
       for (var i = 0; i < choseTrait.length; i++) {
         if (choseTrait[i] == traitListNow[index].name) {
@@ -324,21 +495,27 @@ Page({
     }
   },
 
-  registerSuccess: function (e) {
-    var nowTime = utils.getTime();
-    var teacherName = e.detail.value.teacherName;
-    var telephone = e.detail.value.telephone;
-    var photo = this.data.photo;
-    var choseCourse = this.data.choseCourse;
-    var choseTrait = this.data.choseTrait;
-    var major = e.detail.value.major;
-    var teacherScore = e.detail.value.teacherScore;
-    var salary = e.detail.value.salary;
-    var remark = e.detail.value.remark;
-    var sex = this.data.sexArray[this.data.sexIndex];
-    var university = this.data.universityArray[this.data.universityIndex];
-    var degree = this.data.degreeArray[this.data.degreeIndex];
-    if (university == '中国海洋大学') {
+  registerSuccess: function(e) {
+    //var nowTime = utils.getTime();
+    var detailTime = utils.detailTime();
+    var c_name = e.detail.value.teacherName;
+    var c_sex = this.data.sexArray[this.data.sexIndex];
+    var c_phone = e.detail.value.telephone;
+    var c_imgurl = this.data.photo;
+    var c_tech_1 = this.data.choseCourse;
+    var c_tech_2 = this.data.choseTrait;
+    //var c_district = this.data.district;
+    var c_district = e.detail.value.district;
+    //var c_address = this.data.address;
+    var c_address = e.detail.value.address;
+    //var major = e.detail.value.major;
+    //var teacherScore = e.detail.value.teacherScore;
+    //var salary = e.detail.value.salary;
+    var c_remark = e.detail.value.remark;
+    //var c_remark = this.data.remark;
+    //var university = this.data.universityArray[this.data.universityIndex];
+    //var degree = this.data.degreeArray[this.data.degreeIndex];
+    /*if (university == '中国海洋大学') {
       this.setData({
         trait: '985'
       })
@@ -354,9 +531,9 @@ Page({
       this.setData({
         trait: 'null'
       })
-    }
+    }*/
 
-    if (!teacherName || teacherName == '老师' || teacherName == '老老师') {
+    if (!c_name || c_name == '师傅' || c_name == '阿姨') {
       wx.showToast({
         title: '请填写您的称呼',
         image: '../../images/warn.png',
@@ -365,8 +542,16 @@ Page({
       this.setData({
         inputName: false
       })
-    }
-    else if (!telephone) {
+    } else if (!c_sex) {
+      wx.showToast({
+        title: '请填写您的称谓',
+        image: '../../images/warn.png',
+        duration: 2000
+      })
+      this.setData({
+        inputSex: false
+      })
+    } else if (!c_phone) {
       wx.showToast({
         title: '请填写您的电话',
         image: '../../images/warn.png',
@@ -375,15 +560,50 @@ Page({
       this.setData({
         inputTelephone: false
       })
-    }
-    else if (photo == "../../images/photo111.png") {
+    } else if (c_imgurl == "../../images/photo111.png") {
       wx.showToast({
         title: '请添加您的头像',
         image: '../../images/warn.png',
         duration: 2000
       })
+    } else if (!c_tech_1) {
+      wx.showToast({
+        title: '请填写您的技能一',
+        image: '../../images/warn.png',
+        duration: 2000
+      })
+      this.setData({
+        inputTech1: false
+      })
+    } else if (!c_tech_2) {
+      wx.showToast({
+        title: '请填写您的技能二',
+        image: '../../images/warn.png',
+        duration: 2000
+      })
+      this.setData({
+        inputTech2: false
+      })
+    } else if (!c_district) {
+      wx.showToast({
+        title: '请填写您所在区域',
+        image: '../../images/warn.png',
+        duration: 2000
+      })
+      this.setData({
+        inputDistrict: false
+      })
+    } else if (!c_address) {
+      wx.showToast({
+        title: '请填写您所在详细地址',
+        image: '../../images/warn.png',
+        duration: 2000
+      })
+      this.setData({
+        inputAddress: false
+      })
     }
-    else if (!major) {
+    /*else if (!major) {
       wx.showToast({
         title: '请填写您的专业',
         image: '../../images/warn.png',
@@ -419,108 +639,102 @@ Page({
         image: '../../images/warn.png',
         duration: 2000
       })
-    }
-    else if (!remark) {
+    }*/
+    else if (!c_remark) {
       wx.showToast({
         title: '请尽量详细填写你的备注',
         image: '../../images/warn.png',
         duration: 2000
       })
-    }
-    else {
-      var user = Bmob.Object.extend("_User");
-      var UserModel = new user();
+    } else {
+      wx.request({
+        url: 'https://www.zhuhaojia360.com/technician_list_insert.php',
+        data: {
+          c_reg_date: detailTime,
+          c_name: c_name,
+          c_sex: c_sex,
+          c_phone: c_phone,
+          c_imgurl: c_imgurl,
+          c_tech_1: c_tech_1,
+          c_tech_2: c_tech_2,
+          c_district: c_district,
+          c_address: c_address,
+          c_remark: c_remark
+          //cuserid: userId
+          //var objectId, that = this;
+          //var currentUser = Bmob.User.current();
+          //objectId = currentUser.id;
+        },
+        method: 'POST',
+        header: {
+          //'content-type': 'application/json'
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        success: function(res) {
+          console.log(res.data);
+          console.log('submit success');
+          //var releaseId = result.id;
+          //console.log("日记创建成功, objectId:" + result.id);
+          //query.get(objectId, {
+          //success: function (result) {
+          //result.set('release', releaseId);
+          //result.set('register', true);
+          //result.set('role', "teacher");
+          //result.save();
 
-      var Teacher = Bmob.Object.extend("teacher");
-      var teacher = new Teacher();
-      var query = new Bmob.Query(user);
-      var objectId, that = this;
-      var currentUser = Bmob.User.current();
-      objectId = currentUser.id;
-
-
-      teacher.set("teacher_name", teacherName);
-      teacher.set("telephone", telephone);
-      teacher.set("major", major);
-      teacher.set("teacher_score", teacherScore);
-      teacher.set("salary", salary);
-      teacher.set("self_int", remark);
-      teacher.set("sex", sex);
-      teacher.set("university", university);
-      teacher.set("degree", degree);
-      teacher.set("teach_course", choseCourse);
-      teacher.set("teach_trait", choseTrait);
-      teacher.set("photo", photo);
-      teacher.set("trait", this.data.trait);
-      teacher.set("own", objectId);
-      teacher.set("images", that.data.urlArr);
-      teacher.set("modifyTime", nowTime);
-
-
-      teacher.save(null, {
-        success: function (result) {
-          var releaseId = result.id;
-          console.log("日记创建成功, objectId:" + result.id);
-          query.get(objectId, {
-            success: function (result) {
-              result.set('release', releaseId);
-              result.set('register', true);
-              result.set('role', "teacher");
-              result.save();
-
-              wx.showToast({
-                title: '发布成功',
-                icon: 'success',
-                success: function () {
-                  setTimeout(function () {
-
-                    if (wx.reLaunch) {
-                      wx.reLaunch({
-                        url: '/pages/teacherList/teacherList'
-                      });
-                    } else {
-                      wx.switchTab({
-                        url: '/pages/teacherList/teacherList'
-                      })
-                    }
-
-                  }, 2000);
+          wx.showToast({
+            title: '发布成功',
+            icon: 'success',
+            success: function() {
+              setTimeout(function() {
+                if (wx.reLaunch) {
+                  wx.reLaunch({
+                    url: 'pages/booking/booking'
+                  });
+                } else {
+                  wx.switchTab({
+                    url: 'pages/booking/booking'
+                  })
                 }
-              });
-            },
-            error: function (object, error) {
-              wx.showToast({
-                title: '网络错误',
-                image: '../../images/warn.png',
-                duration: 2000
-              })
+              }, 2000);
             }
           });
         },
-        error: function (result, error) {
+        error: function(object, error) {
           wx.showToast({
             title: '网络错误',
             image: '../../images/warn.png',
             duration: 2000
           })
+        },
+        fail: function(res) {
+          console.log('submit fail');
+          wx.showToast({
+            title: '提交失败',
+            icon: 'none'
+          })
+        },
+        complete: function(res) {
+          console.log('submit complete');
+          wx.hideLoading();
         }
       });
     }
   },
 
-  jumpTeacher: function () {
+  jumpTeacher: function() {
     wx.redirectTo({
       url: '../customerRegister/customerRegister'
     })
   },
 
-  upImg: function () {
+  upImg: function() {
     var that = this;
     wx.chooseImage({
       count: 9, // 默认9
       sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-      success: function (res) {
+      success: function(res) {
         wx.showNavigationBarLoading()
         that.setData({
           loading: false
@@ -544,13 +758,15 @@ Page({
             if (extension) {
               extension = extension[1].toLowerCase();
             }
-            var name = newDateStr + "." + extension;//上传的图片的别名      
+            var name = newDateStr + "." + extension; //上传的图片的别名      
             var file = new Bmob.File(name, tempFilePath);
-            file.save().then(function (res) {
+            file.save().then(function(res) {
               wx.hideNavigationBarLoading()
               var url = res.url();
               console.log("第" + i + "张Url" + url);
-              urlArr.push({ url });
+              urlArr.push({
+                url
+              });
               j++;
               console.log(j, imgLength);
               // if (imgLength == j) {
@@ -562,7 +778,7 @@ Page({
                 loading: true
               });
               // }
-            }, function (error) {
+            }, function(error) {
               console.log(error)
             });
           }
@@ -571,14 +787,16 @@ Page({
     })
     console.log(that.data.urlArr)
   },
-  previewImage: function (e) {
+
+  previewImage: function(e) {
     var current = e.currentTarget.dataset.current;
     wx.previewImage({
       current: current, // 当前显示图片的http链接
-      urls: that.data.images // 需要预览的图片http链接列表
+      url: that.data.images // 需要预览的图片http链接列表
     })
   },
-  delete: function (e) {
+
+  delete: function(e) {
     // 获取本地显示的图片数组
     var index = e.currentTarget.dataset.index;
     var images = that.data.images;
@@ -600,4 +818,3 @@ function showPic(url, t) {
     photo: url
   })
 }
-
